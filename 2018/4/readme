@@ -1,1 +1,4 @@
 Hint: sort the lines!
+
+Use a defaultdict in order to have the default value (0) for each new entry.
+Sort the dict by values using the operator itemgetter(1) as a key.

@@ -4,7 +4,7 @@ from copy import copy
 
 def read_file():
         lines = []
-        with open("day6_small_input") as fp:
+        with open("day6_input") as fp:
                 line = fp.readline().rstrip()
 
                 while line:
@@ -15,40 +15,40 @@ def read_file():
         return lines
 
 def helper(d, acc, key):
-        print(key, d[key])
+        #print(key, d[key], acc)
         if d[key] == []:
                 return acc
 
+        tmp = acc
+        tmp += 1
         for k in d[key]:
-                # print("for , ", k)
-                return len(d[key]) + helper(d, acc + 1, k)
+                acc += helper(d, tmp, k)
+        return acc
 
 def part1():
         d = defaultdict(lambda: [])
         dd = defaultdict(lambda: [])
         lines = read_file()
 
+        keys = set()
+        values = set()
         for t in lines:
+                keys.add(t[0])
+                values.add(t[1])
                 d[t[0]] += [t[1]]
 
+        # get the COM
+        key = list(keys - values)[0]
 
         queue = []
-        # key = 'VM4'
-        key = 'COM'
-        dcopy = copy(d)
         acc = 0;
-        print(helper(dcopy, acc, key))
-        print(acc)
+        s = 0
 
+        s += helper(d, acc, key)
+
+        print(s)
+
+# 301100
+part1()
 print("hello mia gia")
 print ("tiger ♥")
-
-def rec_fun(n, acc):
-        if n == 1:
-                return acc
-
-        return rec_fun(n-1, acc*n)
-
-
-# print(rec_fun(3,1))
-part1()

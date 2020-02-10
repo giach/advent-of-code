@@ -2,9 +2,9 @@ from collections import defaultdict
 from collections import Counter
 from copy import copy
 
-def read_file():
+def read_file(file_name):
         lines = []
-        with open("day6_input") as fp:
+        with open(file_name) as fp:
                 line = fp.readline().rstrip()
 
                 while line:
@@ -27,8 +27,7 @@ def helper(d, acc, key):
 
 def part1():
         d = defaultdict(lambda: [])
-        dd = defaultdict(lambda: [])
-        lines = read_file()
+        lines = read_file("day6_input")
 
         keys = set()
         values = set()
@@ -40,15 +39,26 @@ def part1():
         # get the COM
         key = list(keys - values)[0]
 
-        queue = []
-        acc = 0;
         s = 0
+        s += helper(d, 0, key)
 
-        s += helper(d, acc, key)
+        print("Result", s)
 
-        print(s)
+
+def part2():
+        ing = defaultdict(lambda: [])
+        outg = defaultdict(lambda: [])
+        lines = read_file("day6_input_2")
+
+        for t in lines:
+                ing[t[0]] += [t[1]]
+                outg[t[1]] += [t[0]]
+
+        inyou = outg['YOU'][0]
+        print(inyou, ing[inyou][0])
 
 # 301100
 part1()
-print("hello mia gia")
+
+part2()
 print ("tiger ♥")

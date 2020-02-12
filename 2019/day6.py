@@ -2,6 +2,10 @@ from collections import defaultdict
 from collections import Counter
 from copy import copy
 
+
+
+
+
 def read_file(file_name):
         lines = []
         with open(file_name) as fp:
@@ -45,20 +49,40 @@ def part1():
         print("Result", s)
 
 
+def all_paths(d, start, dest):
+
+        queue = d[start]
+        visited = [start]
+        path = 0
+        while queue:
+                elem = queue.pop(0)
+                if not elem in visited:
+                        if elem == dest:
+                                return path
+                        else:
+                                path += 1
+                                queue += d[elem]
+                                visited += [elem]
+
+        return path
+
 def part2():
         ing = defaultdict(lambda: [])
         outg = defaultdict(lambda: [])
-        lines = read_file("day6_input_2")
+        lines = read_file("day6_small_input_2")
 
         for t in lines:
                 ing[t[0]] += [t[1]]
-                outg[t[1]] += [t[0]]
+                ing[t[1]] += [t[0]]
 
-        inyou = outg['YOU'][0]
-        print(inyou, ing[inyou][0])
+        path = all_paths(ing, 'YOU', 'SAN')
+        print(path)
+
+
+
 
 # 301100
-part1()
+# part1()
 
 part2()
 print ("tiger ♥")

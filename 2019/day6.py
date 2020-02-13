@@ -46,43 +46,43 @@ def part1():
         s = 0
         s += helper(d, 0, key)
 
-        print("Result", s)
+        print("Part 1 result", s)
 
 
-def all_paths(d, start, dest):
 
-        queue = d[start]
+def min_transfers(d, start, dest):
+
+        # direct nodes are on level 0
+        q = [(n, 0) for n in d[start]]
         visited = [start]
-        path = 0
-        while queue:
-                elem = queue.pop(0)
+        while q:
+                elem, level = q.pop(0)
                 if not elem in visited:
                         if elem == dest:
-                                return path
+                                return level - 1
                         else:
-                                path += 1
-                                queue += d[elem]
+                                q += [(n, level + 1) for n in d[elem]]
                                 visited += [elem]
 
-        return path
+        return None
 
 def part2():
-        ing = defaultdict(lambda: [])
-        outg = defaultdict(lambda: [])
-        lines = read_file("day6_small_input_2")
+        orbits = defaultdict(lambda: [])
+        lines = read_file("day6_input_2")
 
         for t in lines:
-                ing[t[0]] += [t[1]]
-                ing[t[1]] += [t[0]]
+                orbits[t[0]] += [t[1]]
+                orbits[t[1]] += [t[0]]
 
-        path = all_paths(ing, 'YOU', 'SAN')
-        print(path)
+        level = min_transfers(orbits, 'YOU', 'SAN')
+        print("Part 2 result", level)
 
 
 
 
 # 301100
-# part1()
+part1()
 
+# 547
 part2()
 print ("tiger ♥")

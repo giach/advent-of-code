@@ -43,18 +43,13 @@ def part1():
         # mark the instruction as executed
         instructions[i] = (instr, arg, True)
 
-        # jump by argumen or by one
         if instr == JMP:
             i += arg
-        else:
-            i += 1
-        
-        # increment de accumulator
-        if instr == ACC:
+        elif instr == ACC:
             acc += arg
-
-        if instr == NOP:
-            continue
+            i += 1
+        elif instr == NOP:
+            i += 1
         
 
 
